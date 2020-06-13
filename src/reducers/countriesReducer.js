@@ -1,7 +1,8 @@
 import {FETCH_COUNTRIES, SEARCH_COUNTRIES} from '../actions/types';
 
 const initialState={
-    countries:[]
+    countries:[],
+    searchedValue:''
 }
 
 export default function(state = initialState, action){
@@ -15,7 +16,7 @@ export default function(state = initialState, action){
         case SEARCH_COUNTRIES:
             return {
                 ...state,
-                searchedValue:action.searchload
+                searchedValue:action.payload
             }
         default:
             return state;

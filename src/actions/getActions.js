@@ -18,6 +18,16 @@ import {FETCH_COUNTRIES,SEARCH_COUNTRIES} from './types';
     return finalData;
 }
 
+function filteredData (allcountriesData,searchValue){
+    if(searchValue.length){
+        const filteredcountries = allcountriesData.filter(country=>
+            {
+                return country.name.toLowerCase().includes(searchValue.toLowerCase());
+            })
+            return reStructureData(filteredcountries);
+       }
+}
+
 export const getCountries=()=> dispatch => {
             let getUrl = `https://restcountries.eu/rest/v2/all?fields=name;population;region;capital;flag;alpha3Code`;
             return fetch(getUrl, {
@@ -32,20 +42,25 @@ export const getCountries=()=> dispatch => {
             }));  
 }
 
- export const searchCountry =(event) => dispatch =>{
-     
-    let getUrl = `https://restcountries.eu/rest/v2/name/${event.target.value}`;
+ export const searchCountry =(countryName) =>dispatch=>{
+     console.log(countryName)
+     if(countryName){
+        let getUrl = `https://restcountries.eu/rest/v2/name/${countryName}`;
         return fetch(getUrl, {
             method: 'GET'
         }).then(data => {
             if (data.ok) {
                 return data.json();
             }
-        }).then(res => {
-         if(res !== undefined){   
-            dispatch({
+        }).then(res => dispatch({
           type:SEARCH_COUNTRIES,
-          searchload:reStructureData(res)  
-        })}
-    });
+          payload:reStructureData(res)  
+        }));
+     }
+     else{
+    dispatch({
+          type:SEARCH_COUNTRIES,
+          payload:countryName 
+    })
+}
  }
