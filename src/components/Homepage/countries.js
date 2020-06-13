@@ -13,7 +13,8 @@ componentWillMount(){
         let renderThisComponent;
       //     const regionName = this.state.regionSelected;
       if(this.props.searchedCountry){
-        renderThisComponent= <Countrycard displayResults={this.props.searchedCountry } />
+            renderThisComponent= <Countrycard displayResults={this.props.searchedCountry } />
+          
       }
     //    if(countryName.length && regionName.length){
 
@@ -65,7 +66,7 @@ render(){
         <div className="countries-outer-area">
            <SearchBar />
             <div className="country-blocks-wrapper">
-                {this.renderDiv()}
+                {this.renderDiv()? this.renderDiv(): `<div></div>` }
             </div>
         </div>
         )

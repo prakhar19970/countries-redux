@@ -5,7 +5,6 @@ class Countrycard extends Component {
 
     render(){
     return(
-      
             this.props.displayResults.map((data, index) =>
                 (  
                 <div className={(data.length < 4 ? 'new-country-row' :'country-row' )}>     

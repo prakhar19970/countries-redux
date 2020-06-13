@@ -52,15 +52,25 @@ export const getCountries=()=> dispatch => {
             if (data.ok) {
                 return data.json();
             }
-        }).then(res => dispatch({
-          type:SEARCH_COUNTRIES,
-          payload:reStructureData(res)  
-        }));
+        }).then(res => {
+            if(res){
+                    dispatch({
+                    type:SEARCH_COUNTRIES,
+                    payload:reStructureData(res)  
+                    })
+            }
+            else{
+                dispatch({
+                    type:SEARCH_COUNTRIES,
+                    payload:false 
+                    })
+            }
+        })  
      }
      else{
     dispatch({
           type:SEARCH_COUNTRIES,
-          payload:countryName 
+          payload:countryName
     })
 }
  }
