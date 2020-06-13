@@ -5,7 +5,8 @@ class Countrycard extends Component {
 
     render(){
     return(
-            this.props.displayResults.map((data, index) =>
+        <div>{
+            (this.props.displayResults !== 'none'? this.props.displayResults.map((data, index) =>
                 (  
                 <div className={(data.length < 4 ? 'new-country-row' :'country-row' )}>     
                 { data.map((cardData,index)=> (
@@ -24,12 +25,9 @@ class Countrycard extends Component {
                 </div>  
             </div>
         </Link>))}
-    </div>))
-    )}
+    </div>)) : <div>Country Not Found</div>) }
+    </div>)
+}
 }
 
 export default Countrycard;
-
-  // <div>
-        //     {console.log(this.props.displayResults)}
-        // </div>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import SearchBar from "./searchBar";
 import Countrycard from './countryCard';
 import { connect } from 'react-redux';
-import { getCountries ,searchCountry } from '../../actions/getActions'
+import { getCountries} from '../../actions/getActions'
 class Countries extends Component {
 
 componentWillMount(){
@@ -11,11 +11,15 @@ componentWillMount(){
 }
     renderDiv=()=>{
         let renderThisComponent;
-      //     const regionName = this.state.regionSelected;
-      if(this.props.searchedCountry){
+    
+        if(this.props.searchedCountry){
             renderThisComponent= <Countrycard displayResults={this.props.searchedCountry } />
           
-      }
+        }
+      
+        else if(this.props.filteredCountries){
+            renderThisComponent= <Countrycard displayResults={this.props.filteredCountries} />
+        }
     //    if(countryName.length && regionName.length){
 
     //    const filtercountry = this.state.countriesData.filter(country=>
@@ -36,29 +40,9 @@ componentWillMount(){
     return renderThisComponent;
     }
 
-    searchCountry=(event)=>{
-        console.log(event.target.value);
-        if(event.target.value){
-        this.props.searchCountry(event.target.value);
-        this.renderDiv(this.props.searchedCountry)
-        }
-        else{
-            this.renderDiv() 
-        }
-    }
     filterRegion=(event)=>{
             this.setState({regionSelected:event.target.value})
         }
-
-    regionShard=(regions)=>{
-        let regionContainer=[];
-        regions.map((regionData,index)=>{
-            if(regionData.region !== '' && !(regionContainer.includes(regionData.region))){
-            regionContainer.push(regionData.region)}
-            return regionContainer;
-        })
-        return regionContainer;
-    }
 
 render(){
 
@@ -66,7 +50,7 @@ render(){
         <div className="countries-outer-area">
            <SearchBar />
             <div className="country-blocks-wrapper">
-                {this.renderDiv()? this.renderDiv(): `<div></div>` }
+                {this.renderDiv()}
             </div>
         </div>
         )
@@ -77,10 +61,8 @@ render(){
 
 const mapStateToProps = state => ({
     allcountries: state.allcountries.countries,
-    searchedCountry: state.allcountries.searchedValue
+    searchedCountry: state.allcountries.searchedValue,
+    filteredCountries: state.allcountries.filteredValue
 })
 
 export default connect(mapStateToProps,{getCountries})(Countries); 
-
-
-// filterRegionData={this.regionShard(this.state.countriesData)} filterFunction={this.filterRegion} darkMode={this.props.darkMode}

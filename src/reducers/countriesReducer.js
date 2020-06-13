@@ -1,8 +1,9 @@
-import {FETCH_COUNTRIES, SEARCH_COUNTRIES} from '../actions/types';
+import {FETCH_COUNTRIES, SEARCH_COUNTRIES,FILTER_COUNTRIES} from '../actions/types';
 
 const initialState={
     countries:[],
-    searchedValue:''
+    searchedValue:'',
+    filteredValue:''
 }
 
 export default function(state = initialState, action){
@@ -17,6 +18,11 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 searchedValue:action.payload
+            }
+        case FILTER_COUNTRIES:
+            return {
+                ...state,
+                filteredValue:action.payload
             }
         default:
             return state;

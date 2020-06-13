@@ -1,4 +1,4 @@
-import {FETCH_COUNTRIES,SEARCH_COUNTRIES} from './types';
+import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES} from './types';
 
  function reStructureData (allcountriesData){
     let finalData=[];
@@ -43,7 +43,6 @@ export const getCountries=()=> dispatch => {
 }
 
  export const searchCountry =(countryName) =>dispatch=>{
-     console.log(countryName)
      if(countryName){
         let getUrl = `https://restcountries.eu/rest/v2/name/${countryName}`;
         return fetch(getUrl, {
@@ -62,7 +61,7 @@ export const getCountries=()=> dispatch => {
             else{
                 dispatch({
                     type:SEARCH_COUNTRIES,
-                    payload:false 
+                    payload:'none' 
                     })
             }
         })  
@@ -74,3 +73,35 @@ export const getCountries=()=> dispatch => {
     })
 }
  }
+
+ export const filterCountry =(regionName) =>dispatch=>{
+    if(regionName){
+       let getUrl = `https://restcountries.eu/rest/v2/region/${regionName}`;
+       return fetch(getUrl, {
+           method: 'GET'
+       }).then(data => {
+           if (data.ok) {
+               return data.json();
+           }
+       }).then(res => {
+           if(res){
+                   dispatch({
+                   type:FILTER_COUNTRIES,
+                   payload:reStructureData(res)  
+                   })
+           }
+           else{
+               dispatch({
+                   type:FILTER_COUNTRIES,
+                   payload:false 
+                   })
+           }
+       })  
+    }
+    else{
+   dispatch({
+         type:FILTER_COUNTRIES,
+         payload:regionName
+   })
+}
+}
