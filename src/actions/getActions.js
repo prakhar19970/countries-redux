@@ -1,4 +1,4 @@
-import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES} from './types';
+import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS} from './types';
 
  function reStructureData (allcountriesData){
     let finalData=[];
@@ -18,14 +18,27 @@ import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES} from './types';
     return finalData;
 }
 
-function filteredData (allcountriesData,searchValue){
-    if(searchValue.length){
-        const filteredcountries = allcountriesData.filter(country=>
-            {
-                return country.name.toLowerCase().includes(searchValue.toLowerCase());
-            })
-            return reStructureData(filteredcountries);
-       }
+const getborderCountries = (borderCountries) =>dispatch=>{
+    let url = 'https://restcountries.eu/rest/v2/alpha?codes='
+    borderCountries.map((code, index) => {
+        url = url + `${code.toLowerCase()};`;
+        return url;
+    })
+    url = url + `&fields=name;alpha3Code`;
+    return fetch(url, {
+        method: 'GET'
+    }).then(data => {
+        if (data.ok) {
+            return data.json();
+        }
+    }).then(responseData => {
+        if(responseData!==undefined){
+            dispatch({
+                type:FETCH_BORDERS,
+                borderData:responseData  
+          })
+        }
+    });
 }
 
 export const getCountries=()=> dispatch => {
@@ -105,3 +118,29 @@ export const getCountries=()=> dispatch => {
    })
 }
 }
+
+export const getsingleCountry=(countryCode)=> dispatch => { 
+    let getUrl = `https://restcountries.eu/rest/v2/alpha/${countryCode}`;
+    return fetch(getUrl, {
+        method: 'GET'
+    }).then(data => {
+        if (data.ok) {
+            return data.json();
+        }
+    }).then(responseData =>{
+        dispatch(
+        {
+      type:FETCH_COUNTRY,
+      payload:responseData,
+      topDomain:responseData.topLevelDomain,
+      currencies:responseData.currencies,
+      languages:responseData.languages,
+   
+    })
+    dispatch(getborderCountries(responseData.borders))}
+    );  
+}
+
+
+
+

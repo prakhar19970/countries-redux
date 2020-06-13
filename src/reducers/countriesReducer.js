@@ -1,13 +1,17 @@
-import {FETCH_COUNTRIES, SEARCH_COUNTRIES,FILTER_COUNTRIES} from '../actions/types';
+import {FETCH_COUNTRIES, SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS} from '../actions/types';
 
 const initialState={
     countries:[],
+    country:[],
+    borderData:[],
+    topDomainData:[],
+    currenciesData:[],
+    languagesData:[],
     searchedValue:'',
-    filteredValue:''
+    filteredValue:'',
 }
 
 export default function(state = initialState, action){
-    console.log(action)
     switch(action.type){
         case FETCH_COUNTRIES:
             return {
@@ -24,6 +28,19 @@ export default function(state = initialState, action){
                 ...state,
                 filteredValue:action.payload
             }
+        case FETCH_COUNTRY:
+            return {
+                ...state,
+                country:action.payload,
+                topDomainData:action.topDomain,
+                currenciesData:action.currencies,
+                languagesData:action.languages
+            }
+        case FETCH_BORDERS:
+            return {
+                    ...state,
+                    borderData:action.borderData
+                }
         default:
             return state;
     }

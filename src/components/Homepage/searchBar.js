@@ -8,7 +8,7 @@ class SearchBar extends Component {
   searchedValue=(event)=>{
   if(event.target.value){
       this.props.searchCountry(event.target.value)
-  }
+    } 
   else{
     this.props.searchCountry()
   }
@@ -45,7 +45,13 @@ class SearchBar extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+  searchedCountry: state.allcountries.searchedValue,
+  filteredCountries: state.allcountries.filteredValue
+})
+
 SearchBar.propTypes ={
- searchCountry: PropTypes.func.isRequired
+ searchCountry: PropTypes.func.isRequired,
+ filterCountry: PropTypes.func.isRequired
 }
-export default connect(null,{searchCountry,filterCountry})(SearchBar); 
+export default connect(mapStateToProps,{searchCountry,filterCountry})(SearchBar); 
