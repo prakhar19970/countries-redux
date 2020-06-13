@@ -19,6 +19,7 @@ import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BO
 }
 
 const getborderCountries = (borderCountries) =>dispatch=>{
+  if(borderCountries.length){
     let url = 'https://restcountries.eu/rest/v2/alpha?codes='
     borderCountries.map((code, index) => {
         url = url + `${code.toLowerCase()};`;
@@ -39,6 +40,13 @@ const getborderCountries = (borderCountries) =>dispatch=>{
           })
         }
     });
+    }
+    else{
+        dispatch({
+            type:FETCH_BORDERS,
+            borderData:[]  
+      })
+    }
 }
 
 export const getCountries=()=> dispatch => {
