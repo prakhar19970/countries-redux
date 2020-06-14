@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 import { Link} from "react-router-dom";
 import { connect } from 'react-redux';
-import props from 'prop-types';
 import {getsingleCountry} from '../../actions/getActions'
 class Country extends Component {
 
@@ -22,8 +21,8 @@ class Country extends Component {
     render() {
 
         return (
-            <div className= "country-deatils-wrapper">
-                <Link to='/' style={{ textDecoration: 'none', color: 'hsl(200, 15%, 8%)' }}><button className="btn white-btn back-btn">
+            <div className= {this.props.modestatus ? "country-deatils-wrapper dark-background" : "country-deatils-wrapper"}>
+                <Link to='/' style={{ textDecoration: 'none', color: 'hsl(200, 15%, 8%)' }}><button className={this.props.modestatus ? "btn white-btn back-btn dark-mode-element dark-shadow" : "btn white-btn back-btn"}>
                     <i className="fa fa-long-arrow-left fa-sm"> </i>
             Back</button></Link>
                 {
@@ -59,7 +58,7 @@ class Country extends Component {
                                 <div className={this.props.borders.length ? 'border-country-wrapper' : 'd-none'}>
                                     <div className="d-flex border-area"><b>Border Countries:</b></div>
                                     <div className="d-flex border-country-buttons">{this.props.borders.map((borderCountry, index) => (
-                                        <div onClick={()=> this.showCountry(borderCountry.alpha3Code)}className="btn white-btn border-btn">{borderCountry.name}</div>
+                                        <div onClick={()=> this.showCountry(borderCountry.alpha3Code)}className={this.props.modestatus ? "btn white-btn border-btn dark-mode-element dark-shadow" : "btn white-btn border-btn"}>{borderCountry.name}</div>
                                     ))}</div>
                                 </div>
                             </div>
@@ -76,11 +75,8 @@ const mapStateToProps = state => ({
     borders:state.allcountries.borderData,
     topDomain:state.allcountries.topDomainData,
     currencies:state.allcountries.currenciesData,
-    languages:state.allcountries.languagesData
+    languages:state.allcountries.languagesData,
+    modestatus:state.allcountries.darkmode
 })
 
 export default connect(mapStateToProps,{getsingleCountry})(Country); 
-
-// <Link to={`/${borderCountry.alpha3Code}`} key={borderCountry.alpha3Code} 
-// onClick={()=>this.props.getsingleCountry(borderCountry.alpha3Code)}style={{ textDecoration: 'none', color:'hsl(200, 15%, 8%)'}}
-//     className="btn white-btn border-btn">

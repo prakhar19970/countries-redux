@@ -25,12 +25,12 @@ class SearchBar extends Component {
     render(){
     return(
         <div className="d-flex search-wrapper" >
-          <div className="input-area">
+          <div className={this.props.modestatus? "dark-mode-element input-area  dark-shadow ":"input-area"}>
           <i className='fa fa-search fa-sm'></i>
-        <input type="text" name="search" className="countries-search-bar" placeholder='Search for a country...' onChange={this.searchedValue}/>
+        <input type="text" name="search" className={this.props.modestatus? "dark-mode-element countries-search-bar":"countries-search-bar"}  placeholder='Search for a country...' onChange={this.searchedValue}/>
         </div>        
         <div className="dropdown">
-          <select className="btn white-btn" onChange={this.regionFilter}>
+          <select className={this.props.modestatus? "btn white-btn dark-mode-element":"btn white-btn"} onChange={this.regionFilter}>
           <option className="btn white-btn" value=''>Region</option>
                   <option value='africa'>Africa</option>
                   <option value='americas'>Americas</option>
@@ -47,7 +47,8 @@ class SearchBar extends Component {
 
 const mapStateToProps = state => ({
   searchedCountry: state.allcountries.searchedValue,
-  filteredCountries: state.allcountries.filteredValue
+  filteredCountries: state.allcountries.filteredValue,
+  modestatus: state.allcountries.darkmode
 })
 
 SearchBar.propTypes ={

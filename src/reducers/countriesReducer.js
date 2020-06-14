@@ -1,4 +1,4 @@
-import {FETCH_COUNTRIES, SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS} from '../actions/types';
+import {FETCH_COUNTRIES, SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS,DARK_MODE} from '../actions/types';
 
 const initialState={
     countries:[],
@@ -9,6 +9,7 @@ const initialState={
     languagesData:[],
     searchedValue:'',
     filteredValue:'',
+    darkmode:false
 }
 
 export default function(state = initialState, action){
@@ -41,6 +42,11 @@ export default function(state = initialState, action){
                     ...state,
                     borderData:action.borderData
                 }
+        case DARK_MODE:
+            return{
+                ...state,
+                darkmode:action.payload
+            }
         default:
             return state;
     }

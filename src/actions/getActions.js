@@ -1,4 +1,4 @@
-import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS} from './types';
+import {FETCH_COUNTRIES,SEARCH_COUNTRIES,FILTER_COUNTRIES,FETCH_COUNTRY,FETCH_BORDERS,DARK_MODE} from './types';
 
  function reStructureData (allcountriesData){
     let finalData=[];
@@ -149,6 +149,20 @@ export const getsingleCountry=(countryCode)=> dispatch => {
     );  
 }
 
+export const activateDarkMode=(mode)=> dispatch=>{
+        if(mode){
+            dispatch({
+                type:DARK_MODE,
+                payload:false
+        })
+    }
+    else{
+        dispatch({
+            type:DARK_MODE,
+            payload:true
+    })
+    }
+}
 
 
 

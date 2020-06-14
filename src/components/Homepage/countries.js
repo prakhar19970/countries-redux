@@ -29,7 +29,7 @@ componentWillMount(){
 render(){
 
     return(
-        <div className="countries-outer-area">
+        <div className={this.props.modestatus ?"dark-background countries-outer-area":"countries-outer-area"}>
            <SearchBar />
             <div className="country-blocks-wrapper">
                 {this.renderDiv()}
@@ -44,7 +44,8 @@ render(){
 const mapStateToProps = state => ({
     allcountries: state.allcountries.countries,
     searchedCountry: state.allcountries.searchedValue,
-    filteredCountries: state.allcountries.filteredValue
+    filteredCountries: state.allcountries.filteredValue,
+    modestatus: state.allcountries.darkmode
 })
 
 export default connect(mapStateToProps,{getCountries})(Countries); 
