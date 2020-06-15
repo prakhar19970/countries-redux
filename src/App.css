@@ -292,3 +292,7 @@ width: 45%;
   }
   }
   
+  .not-found-message{
+    font-size: 22px;
+    font-weight: 800;
+  }

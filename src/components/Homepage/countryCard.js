@@ -26,7 +26,7 @@ class Countrycard extends Component {
             </div>  
         </div>
     </Link>))}
-</div>)) : <div>Country Not Found</div>) }
+</div>)) : <div className="not-found-message">Country Not Found...</div>) }
     </div>)
 }
 }
